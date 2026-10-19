@@ -1243,7 +1243,7 @@ function App() {
             </p>
           </div>
           <div
-            className="project-filters reveal"
+            className="project-filters"
             role="group"
             aria-label="Filter projects"
           >
@@ -1260,7 +1260,7 @@ function App() {
               </button>
             ))}
           </div>
-          <div className="project-grid reveal-3d-stagger">
+          <div className="project-grid">
             {visibleProjects.map((p) => (
               <TiltCard key={p.title} intensity={9} className="project-tilt">
                 <article className="project-card">
