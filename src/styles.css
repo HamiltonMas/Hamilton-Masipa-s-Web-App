@@ -3258,3 +3258,50 @@ main, section, header, footer, .section-wrap, .hero, .about-inner, .contact-inne
 /* Illustrative website preview images added to project cards */
 .project-visual { position: relative; overflow: hidden; }
 .project-preview-image { display: block; width: 100%; height: 100%; min-height: 220px; object-fit: cover; object-position: top center; border-radius: inherit; }
+
+
+/* Performance and interaction fixes: keep project filters/cards available immediately. */
+.project-filters {
+  position: relative;
+  z-index: 5;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  isolation: isolate;
+}
+.project-filters .filter-button {
+  position: relative;
+  z-index: 6;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+.project-grid {
+  display: grid;
+  opacity: 1 !important;
+  transform: none !important;
+  perspective: none !important;
+  transform-style: flat !important;
+}
+.project-grid > * {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+  will-change: auto !important;
+}
+.project-card, .project-tilt, .tilt-card, .tilt-inner {
+  transform-style: flat;
+  backface-visibility: visible;
+}
+/* Avoid costly decorative effects from affecting responsiveness and click targets. */
+.dimensional-canvas { pointer-events: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+@media (max-width: 900px) {
+  .scene-stars, .scene-glow, .dimensional-canvas { animation: none !important; }
+}
