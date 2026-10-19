@@ -30,7 +30,7 @@ import "./styles.css";
 
 const WHATSAPP_NUMBER = "27729242639";
 const CONTACT_EMAIL = "hamiltonmasipa@gmail.com";
-const WEB3FORMS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+const WEB3FORMS_KEY = "bf0bbcb0-b76d-4686-9720-aa5f10880a2b";
 
 const wa = (msg) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -633,7 +633,6 @@ function AdvancedDimensionalScene() {
       ctx.fillStyle = glow;
       ctx.fillRect(cx - base * 3, cy - base * 3, base * 6, base * 6);
 
-      // Cinematic orbital rings: multiple tilted ellipses create a layered holographic field.
       ctx.save();
       ctx.translate(cx, cy);
       for (let ring = 0; ring < 4; ring++) {
@@ -661,7 +660,6 @@ function AdvancedDimensionalScene() {
         ctx.stroke();
         ctx.restore();
       }
-      // A moving light point travels around the outer orbit like a satellite.
       const satelliteAngle = elapsed * 0.42 + pointerX * 0.25;
       const satelliteX = Math.cos(satelliteAngle) * base * 1.82;
       const satelliteY = Math.sin(satelliteAngle) * base * 0.72;
@@ -682,7 +680,6 @@ function AdvancedDimensionalScene() {
       ctx.fill();
       ctx.restore();
 
-      // 4D hypercube projection: rotate in four dimensions, then project into 3D and the screen.
       const projected4 = vertices4.map((original) => {
         let v = original;
         v = rotate4(v, 0, 3, elapsed * 0.33 + pointerX * 0.45);
@@ -713,7 +710,6 @@ function AdvancedDimensionalScene() {
         ctx.stroke();
       });
 
-      // A second, smaller 3D wireframe polyhedron gives the scene a layered depth cue.
       const inner = cubeVertices.map((v) =>
         project3(v, cx, cy, base * 0.48, -rotY * 1.6, rotX * 1.3),
       );
@@ -945,14 +941,17 @@ function App() {
           from_name: "Hamilton Masipa Website",
           name: form.name,
           email: form.email,
+          replyto: form.email,
           business: form.business,
           project_type: form.type,
           budget: form.budget,
           message: form.details,
         }),
       });
-      const data = await res.json();
-      if (data.success) {
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success) {
         setStatus("success");
         setForm({
           name: "",
@@ -962,8 +961,12 @@ function App() {
           budget: "Not sure yet",
           details: "",
         });
-      } else setStatus("error");
-    } catch {
+      } else {
+        console.error("Web3Forms error:", res.status, data);
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Submit failed:", err);
       setStatus("error");
     }
   };
