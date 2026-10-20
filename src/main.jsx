@@ -29,7 +29,7 @@ import {
 import "./styles.css";
 
 const WHATSAPP_NUMBER = "27729242639";
-const CONTACT_EMAIL = "hamiltonmasipa@gmail.com";
+const CONTACT_EMAIL = "masipahamilton5@gmail.com";
 const WEB3FORMS_KEY = "bf0bbcb0-b76d-4686-9720-aa5f10880a2b";
 
 const wa = (msg) =>
